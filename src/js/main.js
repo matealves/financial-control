@@ -3,6 +3,7 @@ const incomeDisplay = document.querySelector("#money-plus");
 const expenseDisplay = document.querySelector("#money-minus");
 const balanceDisplay = document.querySelector("#balance");
 const form = document.querySelector("#form");
+const selectMonth = document.querySelector("#mes");
 const inputTransactionName = document.querySelector("#text");
 const inputTransactionAmount = document.querySelector("#amount");
 
@@ -12,13 +13,23 @@ const localStorageTransactions = JSON.parse(
 let transactions =
   localStorage.getItem("transactions") !== null ? localStorageTransactions : [];
 
+const setMonth = () => {
+  let getMonth = new Date().getMonth();
+  Array.from(selectMonth.children).forEach((option) => {
+    option.removeAttribute("selected");
+  });
+  selectMonth[getMonth].setAttribute("selected", "");
+};
+
+setMonth();
+
 const removeTransaction = (id) => {
   transactions = transactions.filter((transaction) => transaction.id !== id);
   updateLocalStorage();
   render();
 };
 
-const addTransactionIntoDOM = ({ amount, name, id }) => {
+const addTransactionIntoDOM = ({ id, name, amount }) => {
   const operator = amount < 0 ? "-" : "+";
   const CSSClas = amount < 0 ? "minus" : "plus";
   const amountWithoutOperator = Math.abs(amount).toLocaleString("pt-br", {
@@ -52,7 +63,9 @@ const getTotal = (transactionsAmount) =>
   );
 
 const updateBalanceValues = () => {
-  const transactionsAmount = transactions.map(({ amount }) => amount);
+  const transactionsAmount = transactions
+    .filter(({ month }) => month == selectMonth.value)
+    .map(({ amount }) => amount);
   const total = getTotal(transactionsAmount);
   const income = getIncomes(transactionsAmount);
   const expense = getExpenses(transactionsAmount);
@@ -72,12 +85,14 @@ const updateBalanceValues = () => {
 
   Math.abs(expense) > income
     ? (balanceDisplay.style.color = "#c0392b")
-    : (balanceDisplay.style.color = "#2e75cc");
+    : (balanceDisplay.style.color = "#9c88ff");
 };
 
 const render = () => {
   transactionsUl.innerHTML = ""; // reset list
-  transactions.forEach(addTransactionIntoDOM);
+  transactions
+    .filter(({ month }) => month == selectMonth.value)
+    .forEach(addTransactionIntoDOM);
   updateBalanceValues();
 };
 
@@ -89,11 +104,12 @@ const updateLocalStorage = () => {
 
 const generateID = () => Math.round(Math.random() * 1000);
 
-const addToTransactionsArray = (transactionName, transactionAmount) => {
+const addToTransactionsArray = (month, name, amount) => {
   const transaction = {
     id: generateID(),
-    name: transactionName,
-    amount: Number(transactionAmount),
+    month: Number(month),
+    name: name,
+    amount: Number(amount),
   };
 
   transactions.push(transaction);
@@ -107,6 +123,7 @@ const cleanInputs = () => {
 const handleFormSubmit = (event) => {
   event.preventDefault();
 
+  const transactionMonth = selectMonth.value;
   const transactionName = inputTransactionName.value.trim();
   const transactionAmount = inputTransactionAmount.value.trim();
   const isSomeInputEmpty = transactionName === "" || transactionAmount === "";
@@ -117,11 +134,13 @@ const handleFormSubmit = (event) => {
     return;
   }
 
-  addToTransactionsArray(transactionName, transactionAmount);
+  addToTransactionsArray(transactionMonth, transactionName, transactionAmount);
   render();
   updateLocalStorage();
   cleanInputs();
   inputTransactionName.focus();
 };
+
+selectMonth.addEventListener("input", render);
 
 form.addEventListener("submit", handleFormSubmit);
