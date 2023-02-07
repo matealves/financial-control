@@ -81,9 +81,13 @@ const updateBalanceValues = () => {
   const transactionsAmount = transactions
     .filter(({ month }) => month == selectMonth.value)
     .map(({ amount }) => amount);
-  const total = getTotal(transactionsAmount);
+  let total = getTotal(transactionsAmount);
   const income = getIncomes(transactionsAmount);
   const expense = getExpenses(transactionsAmount);
+
+  if (total < 0 && total > -1) {
+    total = Math.abs(total.toFixed(2));
+  }
 
   balanceDisplay.textContent = total.toLocaleString("pt-br", {
     style: "currency",
