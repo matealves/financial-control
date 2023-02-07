@@ -166,12 +166,40 @@ small {
   padding: 2px 5px 5px 5px;
   position: absolute;
   top: 54%;
-  left: -2%;
+  left: -0.5%;
   transform: translate(-100%, -50%);
-  transition: fill 0.2s ease;
+  transition: all 0.3s ease;
+  opacity: 0;
 
   &:hover {
     fill: #979797;
+  }
+}
+
+.edit-btn {
+  cursor: pointer;
+  background-color: #f7f7f7;
+  border: 0;
+  fill: #d1d1d1;
+  font-size: 20px;
+  line-height: 20px;
+  padding: 2px 5px 5px 5px;
+  position: absolute;
+  top: 54%;
+  left: -9%;
+  transform: translate(-100%, -50%);
+  transition: all 0.3s ease;
+  opacity: 0;
+
+  &:hover {
+    fill: #979797;
+  }
+}
+
+ul li {
+  &:hover .edit-btn,
+  &:hover .delete-btn {
+    opacity: 1;
   }
 }
 

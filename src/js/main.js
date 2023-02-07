@@ -28,6 +28,20 @@ const removeTransaction = (id) => {
   updateLocalStorage();
   render();
 };
+const editTransaction = (id) => {
+  let currentTransaction = transactions.filter(
+    (transaction) => transaction.id == id
+  );
+
+  inputTransactionName.value = currentTransaction[0].name;
+  inputTransactionAmount.value = currentTransaction[0].amount;
+  document.querySelector(".btn").textContent = "Salvar";
+  inputTransactionName.focus();
+
+  let elemento = document.querySelector(`[onclick="editTransaction(${id})"]`);
+  elemento.setAttribute("data-edited", id);
+  elemento.parentElement.style.background = "#d1d1d1";
+};
 
 const addTransactionIntoDOM = ({ id, name, amount }) => {
   const operator = amount < 0 ? "-" : "+";
@@ -40,8 +54,9 @@ const addTransactionIntoDOM = ({ id, name, amount }) => {
 
   li.classList.add(CSSClas);
   li.innerHTML = `${name} <span>${operator}
-  ${amountWithoutOperator}</span><button class="delete-btn"
-   onClick="removeTransaction(${id})"><box-icon class="trash" type='solid' name='trash'></box-icon></i></button>`;
+  ${amountWithoutOperator}</span>
+  <button class="edit-btn" onClick="editTransaction(${id})" title="Editar"><box-icon type='solid' name='edit'></box-icon></i></button>
+  <button class="delete-btn" onClick="removeTransaction(${id})" title="Apagar"><box-icon class="trash" type='solid' name='trash'></box-icon></button>`;
 
   transactionsUl.append(li);
 };
@@ -105,6 +120,24 @@ const updateLocalStorage = () => {
 const generateID = () => Math.round(Math.random() * 1000);
 
 const addToTransactionsArray = (month, name, amount) => {
+  const hasEdited = document.querySelector("[data-edited]");
+
+  if (hasEdited) {
+    let id = hasEdited.getAttribute("data-edited");
+
+    transactions.forEach((transaction) => {
+      if (transaction.id == id) {
+        transaction.name = name;
+        transaction.amount = Number(amount);
+      }
+    });
+
+    hasEdited.removeAttribute("data-edited");
+    document.querySelector(".btn").textContent = "Adicionar";
+
+    return;
+  }
+
   const transaction = {
     id: generateID(),
     month: Number(month),
