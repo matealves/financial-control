@@ -85,7 +85,7 @@ const updateBalanceValues = () => {
   const income = getIncomes(transactionsAmount);
   const expense = getExpenses(transactionsAmount);
 
-  if (total < 0 && total > -1) {
+  if (total < 0 && total > -0.01) {
     total = Math.abs(total.toFixed(2));
   }
 
