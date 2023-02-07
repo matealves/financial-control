@@ -3,7 +3,7 @@ const incomeDisplay = document.querySelector("#money-plus");
 const expenseDisplay = document.querySelector("#money-minus");
 const balanceDisplay = document.querySelector("#balance");
 const form = document.querySelector("#form");
-const selectMonth = document.querySelector("#mes");
+const selectMonth = document.querySelector("#month");
 const inputTransactionName = document.querySelector("#text");
 const inputTransactionAmount = document.querySelector("#amount");
 

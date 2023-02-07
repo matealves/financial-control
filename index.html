@@ -18,8 +18,8 @@
         <div class="header">
             <h1 id="balance" class="balance">R$ 0.00</h1>
 
-            <div class="container-mes">
-                <select name="mes" class="mes" id="mes">
+            <div class="container-month">
+                <select name="mes" class="month" id="month">
                     <option value="1">Janeiro</option>
                     <option value="2">Fevereiro</option>
                     <option value="3">Março</option>
@@ -48,27 +48,35 @@
             </div>
         </div>
 
-        <h3>Transações</h3>
+        <div class="container-body">
+            <div class="left">
+                <h3>Transações</h3>
 
-        <ul id="transactions" class="transactions"></ul>
-
-        <h3>Adicionar transação</h3>
-
-        <form id="form">
-            <div class="form-control">
-                <label for="text">Descrição</label>
-                <input autofocus type="text" id="text" placeholder="Nome da transação" />
+                <ul id="transactions" class="transactions"></ul>
             </div>
 
-            <div class="form-control">
-                <label for="amount">Valor <br />
-                    <small>(negativo - despesas, positivo - receitas)</small>
-                </label>
-                <input type="number" id="amount" placeholder="Valor da transação" step=".01" />
-            </div>
+            <div class="right">
+                <h3>Adicionar transação</h3>
 
-            <button class="btn">Adicionar</button>
-        </form>
+                <form id="form">
+                    <div class="form-control">
+                        <label for="text">Descrição</label>
+                        <input autofocus type="text" id="text" placeholder="Nome da transação" />
+                    </div>
+
+                    <div class="form-control">
+                        <label for="amount">Valor <br />
+                            <small>(negativo - despesas, positivo - receitas)</small>
+                        </label>
+                        <input type="number" id="amount" placeholder="Valor da transação" step=".01" />
+                    </div>
+
+                    <button class="btn">Adicionar</button>
+                </form>
+            </div>
+        </div>
+
+
     </div>
 
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
