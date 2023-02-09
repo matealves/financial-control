@@ -35,6 +35,7 @@ const editTransaction = (id) => {
 
   inputTransactionName.value = currentTransaction[0].name;
   inputTransactionAmount.value = currentTransaction[0].amount;
+  document.querySelector(".right h3").textContent = "Editar transação";
   document.querySelector(".btn").textContent = "Salvar";
   inputTransactionName.focus();
 
@@ -137,6 +138,7 @@ const addToTransactionsArray = (month, name, amount) => {
     });
 
     hasEdited.removeAttribute("data-edited");
+    document.querySelector(".right h3").textContent = "Adicionar transação";
     document.querySelector(".btn").textContent = "Adicionar";
 
     return;

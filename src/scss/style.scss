@@ -319,3 +319,17 @@ ul li {
     font-size: 14px;
   }
 }
+
+::-webkit-scrollbar {
+  width: 18px;
+
+  &-thumb {
+    background: #9c88ff;
+    border: 4px solid #f7f7f7;
+    border-radius: 8px;
+  }
+
+  &-track {
+    background: #f7f7f7;
+  }
+}
